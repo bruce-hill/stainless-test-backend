@@ -34,12 +34,18 @@ def sign_payload(secret: str, payload: bytes) -> str:
 
 
 async def send_webhook(url: str, secret: str, event_type: str, payload: dict):
-    timestamp = datetime.now(timezone.utc).isoformat(timespec='microseconds').replace('+00:00', 'Z')
-    body = json.dumps({
-        "type": event_type,
-        "timestamp": timestamp,
-        "data": payload,
-    }).encode()
+    timestamp = (
+        datetime.now(timezone.utc)
+        .isoformat(timespec="microseconds")
+        .replace("+00:00", "Z")
+    )
+    body = json.dumps(
+        {
+            "type": event_type,
+            "timestamp": timestamp,
+            "data": payload,
+        }
+    ).encode()
     signature = sign_payload(secret, body)
     headers = {
         "Content-Type": "application/json",
