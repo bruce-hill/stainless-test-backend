@@ -46,7 +46,6 @@ async def send_webhook(url: str, secret: str, event_type: str, payload: dict):
         "X-Signature-256": f"sha256={signature}",
         "webhook-timestamp": timestamp,
         "webhook-id": secrets.token_hex(32),
-        #"webhook-signature": ,
     }
     async with httpx.AsyncClient() as client:
         await client.post(url, content=body, headers=headers)
